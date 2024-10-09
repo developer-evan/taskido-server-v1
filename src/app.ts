@@ -3,7 +3,7 @@ import * as dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
 import bodyParser = require("body-parser");
 
-interface Todo {
+interface Task {
   id: string;
   title: string;
   completed: boolean;
@@ -36,13 +36,24 @@ mongoose
 const app = express();
 app.use(bodyParser.json());
 
-const todoSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  completed: { type: Boolean, default: false },
-});
+// const taskSchema = new mongoose.Schema({
+//   title: { type: String, required: true },
+//   description: { type: String, required: true },
+//   completed: { type: Boolean, default: false },
+// });
+
+const taskSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    completed: { type: Boolean, default: false },
+  },
+  { timestamps: true } // This adds createdAt and updatedAt fields
+);
+
 
 // Define the model
-const TaskModel = mongoose.model("tasks", todoSchema);
+const TaskModel = mongoose.model("tasks", taskSchema);
 
 // Get all tasks
 app.get("/getTasks", async (req: any, res: any) => {
@@ -72,7 +83,13 @@ app.post("/createTask", async (req: any, res: any) => {
   try {
     const task = new TaskModel({
       title: req.body.title,
+      description: req.body.description,
       completed: req.body.completed || false,
+      // createdAt 
+     
+      // updatedAt
+      
+
     });
     await task.save();
     res.status(201).json({ message: "Task created successfully", task });
@@ -89,6 +106,7 @@ app.patch("/updateTask/:id", async (req: any, res: any) => {
       return res.status(404).json({ message: "Task not found" });
     }
     task.title = req.body.title || task.title;
+
     task.completed = req.body.completed || task.completed;
     await task.save();
     res.json({ message: "Task updated successfully", task });
