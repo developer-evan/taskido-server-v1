@@ -51,7 +51,6 @@ const taskSchema = new mongoose.Schema(
   { timestamps: true } // This adds createdAt and updatedAt fields
 );
 
-
 // Define the model
 const TaskModel = mongoose.model("tasks", taskSchema);
 
@@ -85,11 +84,7 @@ app.post("/createTask", async (req: any, res: any) => {
       title: req.body.title,
       description: req.body.description,
       completed: req.body.completed || false,
-      // createdAt 
-     
-      // updatedAt
       
-
     });
     await task.save();
     res.status(201).json({ message: "Task created successfully", task });
