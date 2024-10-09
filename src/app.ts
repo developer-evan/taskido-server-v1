@@ -36,7 +36,6 @@ mongoose
 const app = express();
 app.use(bodyParser.json());
 
-
 const todoSchema = new mongoose.Schema({
   title: { type: String, required: true },
   completed: { type: Boolean, default: false },
@@ -69,7 +68,6 @@ app.get("/getTask/:id", async (req: any, res: any) => {
   }
 });
 
-
 app.post("/createTask", async (req: any, res: any) => {
   try {
     const task = new TaskModel({
@@ -82,7 +80,6 @@ app.post("/createTask", async (req: any, res: any) => {
     res.status(500).json({ message: "Error creating task", error });
   }
 });
-
 
 app.patch("/updateTask/:id", async (req: any, res: any) => {
   try {
@@ -99,7 +96,6 @@ app.patch("/updateTask/:id", async (req: any, res: any) => {
     res.status(500).json({ message: "Error updating task", error });
   }
 });
-
 
 app.delete("/deleteTask/:id", async (req: any, res: any) => {
   try {
