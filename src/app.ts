@@ -36,7 +36,7 @@ mongoose
 const app = express();
 app.use(bodyParser.json());
 
-// Define the schema
+
 const todoSchema = new mongoose.Schema({
   title: { type: String, required: true },
   completed: { type: Boolean, default: false },
@@ -69,7 +69,7 @@ app.get("/getTask/:id", async (req: any, res: any) => {
   }
 });
 
-// Create new task
+
 app.post("/createTask", async (req: any, res: any) => {
   try {
     const task = new TaskModel({
@@ -83,7 +83,7 @@ app.post("/createTask", async (req: any, res: any) => {
   }
 });
 
-// Update task by ID
+
 app.patch("/updateTask/:id", async (req: any, res: any) => {
   try {
     const id = req.params.id;
@@ -100,7 +100,7 @@ app.patch("/updateTask/:id", async (req: any, res: any) => {
   }
 });
 
-// Delete task by ID
+
 app.delete("/deleteTask/:id", async (req: any, res: any) => {
   try {
     const id = req.params.id;
