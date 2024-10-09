@@ -83,8 +83,7 @@ app.post("/createTask", async (req: any, res: any) => {
     const task = new TaskModel({
       title: req.body.title,
       description: req.body.description,
-      completed: req.body.completed || false,
-      
+      completed: req.body.completed || false,      
     });
     await task.save();
     res.status(201).json({ message: "Task created successfully", task });
