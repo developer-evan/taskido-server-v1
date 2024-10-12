@@ -100,14 +100,15 @@ app.patch("/updateTask/:id", async (req: any, res: any) => {
       return res.status(404).json({ message: "Task not found" });
     }
     task.title = req.body.title || task.title;
-
-    task.completed = req.body.completed || task.completed;
+    task.description = req.body.description || task.description;
+    task.completed = req.body.completed !== undefined ? req.body.completed : task.completed;
     await task.save();
     res.json({ message: "Task updated successfully", task });
   } catch (error) {
     res.status(500).json({ message: "Error updating task", error });
   }
 });
+
 
 app.delete("/deleteTask/:id", async (req: any, res: any) => {
   try {
