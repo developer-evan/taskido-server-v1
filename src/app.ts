@@ -6,6 +6,8 @@ import bodyParser = require("body-parser");
 interface Task {
   id: string;
   title: string;
+  description: string;
+  dueDate: Date;
   completed: boolean;
 }
 
@@ -46,6 +48,7 @@ const taskSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
+    dueDate: { type: Date, required: true },
     completed: { type: Boolean, default: false },
   },
   { timestamps: true } // This adds createdAt and updatedAt fields
@@ -83,6 +86,7 @@ app.post("/createTask", async (req: any, res: any) => {
     const task = new TaskModel({
       title: req.body.title,
       description: req.body.description,
+      dueDate: req.body.dueDate,
       completed: req.body.completed || false,      
     });
     await task.save();
@@ -101,6 +105,7 @@ app.patch("/updateTask/:id", async (req: any, res: any) => {
     }
     task.title = req.body.title || task.title;
     task.description = req.body.description || task.description;
+    task.dueDate = req.body.dueDate || task.dueDate;
     task.completed = req.body.completed !== undefined ? req.body.completed : task.completed;
     await task.save();
     res.json({ message: "Task updated successfully", task });
