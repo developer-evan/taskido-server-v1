@@ -9,7 +9,7 @@ declare module "express-serve-static-core" {
   }
 }
 
-const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key";
+const JWT_SECRET = process.env.JWT_SECRET || "secret";
 
 interface JwtPayload {
   userId: string;
@@ -33,8 +33,6 @@ export const authenticateUser = (
     req.user = { id: decoded.userId }; // Attach the decoded user ID to the request object
     next(); // Continue to the next middleware or route handler
   } catch (error) {
-    res.status(401).json({ message: "Invalid token" });
-    return;
-    res.status(401).json({ message: "Invalid token" });
+    res.status(401).json({ message: "No Token Provided" });
   }
 };
