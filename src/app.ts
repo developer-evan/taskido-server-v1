@@ -4,6 +4,7 @@ import bodyParser = require("body-parser");
 import connectDB from "./config/dbConfig";
 import taskRoutes from "./routes/taskRoutes";
 import authRoutes from "./routes/authRoutes";
+import profileRoutes from "./routes/profileRoutes";
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use(bodyParser.json());
 // app.use("/", taskRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
+app.use("/api", profileRoutes);
 
 
 // Start the server

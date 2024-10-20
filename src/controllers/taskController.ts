@@ -15,7 +15,8 @@ export const getTasks = async (
     const userId = req.user?.id;
     const tasks = await TaskModel.find({ user: userId });
     res.json({ message: "Tasks retrieved successfully", tasks });
-  } catch (error) {
+  } 
+  catch (error) {
     next(error);
   }
 };
@@ -123,5 +124,27 @@ export const deleteTask = async (
     res.status(204).json({ message: "Task deleted successfully" });
   } catch (error) {
     next(error);
+  }
+};
+
+// expired tasks 
+export const getExpiredTasks = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const currentDate = new Date();
+    const expiredTasks = await TaskModel.find({ dueDate: { $lt: currentDate } });
+
+    // Here you can implement the logic to send notifications, for now, we'll just log them
+    if (expiredTasks.length > 0) {
+      console.log("Expired tasks:", expiredTasks);
+      res.json({ message: "Expired tasks retrieved successfully", expiredTasks });
+    } else {
+      res.json({ message: "No expired tasks found" });
+    }
+  } catch (error) {
+    next(error); // Pass the error to the next middleware (error handler)
   }
 };
